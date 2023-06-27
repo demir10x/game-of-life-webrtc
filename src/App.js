@@ -1,24 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
+// import Peer from 'simple-peer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Record, Live } from './pages';
+import { createContext } from 'react';
+
+export const EventsContext = createContext(null);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/game-of-life' element={<Record />} />
+        <Route path='/screenshare' element={<Live />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
