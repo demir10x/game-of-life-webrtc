@@ -61,10 +61,6 @@ const Live = () => {
     peer.on('data', (data) => {
       replayer.addEvent(JSON.parse(data));
     });
-
-    return () => {
-      peer.destroy();
-    };
   }, []);
 
   return <h1>Live Sharing</h1>;
