@@ -26,7 +26,7 @@ const Live = () => {
 
   useEffect(() => {
     const socket = io(
-      'https://signaling-server-bm-7010f2e071ee.herokuapp.com/'
+      'https://signalling-server-1a58ba404ba9.herokuapp.com/'
     );
     const roomName = 'testing';
 
