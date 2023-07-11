@@ -52,7 +52,7 @@ const Live = () => {
             signal,
             room: roomName,
           });
-        }, [1000]);
+        }, [200]);
       });
 
       peer.signal(JSON.stringify(data));
