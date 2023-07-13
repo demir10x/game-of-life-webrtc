@@ -1,5 +1,5 @@
 import Peer from 'simple-peer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Replayer, unpack } from 'rrweb';
 import { io } from 'socket.io-client';
 
@@ -10,6 +10,7 @@ const roomName = 'testing';
 
 const Live = () => {
   const [peer, setPeer] = useState(undefined);
+  const [replayerS, setReplayerS] = useState(null);
 
   function createPeer(data) {
     const peer = new Peer({ initiator: false, trickle: false });
@@ -37,19 +38,22 @@ const Live = () => {
       console.warn('*Peer Offer Incoming*');
       createPeer(data);
     });
-  }, []);
 
-  useEffect(() => {
     const replayer = new Replayer([], {
       liveMode: true,
       unpackFn: unpack,
     });
     replayer.startLive();
 
-    if (peer) {
+    setReplayerS(replayer);
+  }, []);
+
+  useEffect(() => {
+    console.warn('****************** COMPONENT RENDER ************');
+    if (peer && replayerS) {
       console.warn('peer', peer._id);
       peer.on('data', (data) => {
-        replayer.addEvent(JSON.parse(data));
+        replayerS.addEvent(JSON.parse(data));
       });
 
       peer.on('error', (error) => {
@@ -57,11 +61,11 @@ const Live = () => {
         peer.destroy();
         peer.removeAllListeners('signal');
         // socket.removeListener('received signal');
-        replayer.destroy();
+        // replayer.destroy();
         setPeer(undefined);
       });
     }
-  }, [peer]);
+  }, [peer, replayerS]);
 
   return <h1>Live Sharing</h1>;
 };
