@@ -9,7 +9,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        // <Route path='/game-of-life' element={<Record />} />
+        {/* <Route path='/game-of-life' element={<Record />} /> */}
         <Route path='/screenshare' element={<Live />} />
       </Routes>
     </BrowserRouter>
